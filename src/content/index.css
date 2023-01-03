@@ -1,0 +1,21 @@
+.mt-iframe-large {
+  background-color: #fbfbfb;
+  height: 100% !important;
+  width: 500px !important;
+  position: fixed !important;
+  transform: translateX(0px);
+  top: 0px;
+  right: 0px;
+  z-index: 9999;
+  box-shadow: 0 1px 6px 2px rgb(0 0 0 / 17%) !important;
+}
+.mt-iframe-small {
+  position: fixed;
+  width: 50px !important;
+  height: 50px !important;
+  position: fixed;
+  right: 130px !important;
+  top: 90vh !important;
+  border-radius: 50px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
