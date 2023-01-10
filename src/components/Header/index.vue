@@ -1,5 +1,5 @@
 <template>
-  <header class="flex justify-between">
+  <header class="flex justify-between p-3  bg-gray-200">
     <CryptocurrencyMth class="text-cool-gray-400 text-[1rem]"></CryptocurrencyMth>
     <div class="w-[100px] flex justify-around cursor-pointer items-center">
       <ic:round-refresh class="text-[1rem]"></ic:round-refresh>

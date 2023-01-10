@@ -1,5 +1,5 @@
 <template>
-  <main class="p-3">
+  <main>
     <Header></Header>
   </main>
 </template>

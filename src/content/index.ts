@@ -1,6 +1,7 @@
+/* eslint-disable no-new */
 /* eslint-disable no-console */
 import { onMessage } from 'webext-bridge'
-import { createScript, createiframe } from './createUtils'
+import { createScript, createPopup, createStyle } from './createUtils'
 import './index.css'
 // communication example: send previous tab title from background page
 onMessage('tab-prev', ({ data }) => {
@@ -13,6 +14,9 @@ document.addEventListener('readystatechange', () => {
 
 const start = async () => {
   await createScript('pageScript/index.global.js')
-  //  createiframe()
+  await createScript('assets/lib/jquery.min.js')
+  await createStyle('assets/lib/drag.css')
+  await createScript('assets/lib/dragx.js')
+  createPopup() // 创建交互界面
 }
 start()
