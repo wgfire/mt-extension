@@ -1,5 +1,5 @@
 {
-  "extends": "@antfu",
+  "extends": ["@antfu", "prettier"],
   "rules": {
     "space-before-function-paren": "off",
     "brace-style": "off",
