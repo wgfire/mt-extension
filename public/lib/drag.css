@@ -1,0 +1,15 @@
+.drag-header {
+  position: absolute;
+  width: calc(100% - 140px);
+  height: 40px;
+  background: rebeccapurple;
+  top: 46px;
+  margin: 0px 0px;
+  left: 32px;
+  top: 0px;
+  cursor: move;
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+  user-select: none;
+  opacity: 0;
+}

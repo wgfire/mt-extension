@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<style>
+  .drag {
+    position: absolute;
+  }
+  .drag-header {
+    width: calc(100% - 140px);
+    height: 40px;
+    background: rebeccapurple;
+    top: 46px;
+    margin: 0px 0px;
+    left: 32px;
+    top: 0px;
+    cursor: move;
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    user-select: none;
+  }
+
+  .drag-left-control {
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    width: 12px;
+    user-select: none;
+    cursor: w-resize;
+    background: antiquewhite;
+  }
+  .drag-right-control {
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    width: 12px;
+    background-color: #6386ce;
+    user-select: none;
+    cursor: w-resize;
+  }
+</style>
+
+<script>
+  class Drag {
+    constructor(selector) {
+      console.log(window.$, "$");
+      const element = $(selector);
+      if (element) {
+        this.element = element;
+        this.startX = 0; // 移动元素的初始x坐标，用于上下文取值方便
+        this.startY = 0;
+        // 设置头部拖拽
+        this.setHeaderListener();
+        // 设置left right top bottom 等拖拽元素
+        this.createControlDom();
+      } else {
+        new Error("未找到元素，请检查选择器");
+      }
+    }
+    // 给头部加上拖拽监听器,不能直接获取iframe里元素，只能在外部创建控制元素
+    setHeaderListener() {
+      console.log(this.element);
+      const header = $("<div class='drag drag-header'></div>");
+      this.element.append(header);
+      console.log(header, "头部");
+      header.mouseenter((e) => header.unbind("mousemove"));
+      header.mouseenter((e) => header.unbind("mousemove"));
+      header.mousedown((e) => {
+        console.log(e, "点击");
+        this.startX = e.offsetX;
+        this.startY = e.offsetY;
+        setTimeout(() => {
+          header.mousemove(this.moveBody.bind(this));
+        }, 100);
+      });
+      header.mouseup((e) => {
+        console.log("松开", e);
+        header.unbind("mousemove");
+      });
+    }
+    //移动整个div
+    moveBody(e) {
+      const { top, left } = this.element.offset();
+      const distanceX = left - (this.startX - e.offsetX);
+      const distanceY = top - (this.startY - e.offsetY);
+      this.element.css("left", distanceX);
+      this.element.css("top", distanceY);
+    }
+
+    // 创建8个大小控制器
+    createControlDom() {
+      const leftControl = $('<div class="drag drag-left-control"></div>');
+      const rightControl = $('<div class="drag drag-right-control"></div>');
+
+      this.element.append(rightControl);
+      this.element.append(leftControl);
+      this.setBarControl(leftControl, "left");
+      this.setBarControl(rightControl, "right");
+    }
+    // left添加控制器
+    setBarControl(barElement, type) {
+      //barElement.mouseenter((e) => $(document).unbind("mousemove"));
+      // barElement.mouseleave((e) => $(document).unbind("mousemove"));
+      barElement.mousedown((e) => {
+        console.log(e);
+        this.startX = e.pageX;
+        this.startY = e.pageY;
+        setTimeout(() => {
+          $(document).mousemove((e) => {
+            const step = type == "left" ? this.startX - e.pageX : e.pageX - this.startX;
+            const width = this.element.width() + step;
+            console.log(e, "移动", width, step);
+            this.element.css("width", width);
+            this.startX = e.pageX;
+          });
+        }, 100);
+      });
+      $(document).mouseup((e) => {
+        console.log(e, "取消");
+        $(document).unbind("mousemove");
+      });
+      this.element.mouseup((e) => {
+        console.log(e, "取消");
+        $(document).unbind("mousemove");
+      });
+    }
+  }
+
+  setTimeout(() => {
+    new Drag(".mt-iframe-large");
+  }, 1000);
+</script>

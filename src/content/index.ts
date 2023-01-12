@@ -16,7 +16,7 @@ const start = async () => {
   await createScript('pageScript/index.global.js')
   await createScript('assets/lib/jquery.min.js')
   await createStyle('assets/lib/drag.css')
-  await createScript('assets/lib/dragx.js')
   createPopup() // 创建交互界面
+  // await createScript('assets/lib/dragx.js')
 }
 start()
