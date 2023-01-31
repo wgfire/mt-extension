@@ -2,7 +2,8 @@
   background-color: #fbfbfb;
   height: 100%;
   width: 500px;
-  position: fixed !important;
+  position: fixed;
+  resize: both;
   transform: translateX(0px);
   top: 24px;
   right: 12px;

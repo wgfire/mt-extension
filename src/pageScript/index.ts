@@ -47,7 +47,7 @@ xhr.onBeforeProxy = function (target: XMLHttpRequest) {
  */
 xhr.onBeforeGetAttr = function (target: XMLHttpRequest, key: string) {
   if (key === 'status') return currentXhr.status
-  return 'get数据'
+  return target[key]
 }
 
 xhr.onload = function () {

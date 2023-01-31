@@ -1,15 +1,53 @@
-.drag-header {
+.drag {
   position: absolute;
+}
+.drag-header {
   width: calc(100% - 140px);
   height: 40px;
-  background: rebeccapurple;
+  background: transparent;
   top: 46px;
   margin: 0px 0px;
   left: 32px;
   top: 0px;
   cursor: move;
   --tw-bg-opacity: 1;
-  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+  /* background-color: rgba(229, 231, 235, var(--tw-bg-opacity)); */
   user-select: none;
-  opacity: 0;
+}
+
+.drag-left-control {
+  height: 100%;
+  left: -12px;
+  top: 0px;
+  width: 12px;
+  user-select: none;
+  cursor: w-resize;
+  background: antiquewhite;
+}
+.drag-right-control {
+  height: 100%;
+  right: -12px;
+  top: 0px;
+  width: 12px;
+  background-color: #6386ce;
+  user-select: none;
+  cursor: w-resize;
+}
+.drag-top-control {
+  width: 100%;
+  right: 0px;
+  top: -12px;
+  height: 12px;
+  background-color: #6386ce;
+  user-select: none;
+  cursor: s-resize;
+}
+.drag-bottom-control {
+  width: 100%;
+  right: 0px;
+  bottom: -12px;
+  height: 12px;
+  background: antiquewhite;
+  user-select: none;
+  cursor: s-resize;
 }
