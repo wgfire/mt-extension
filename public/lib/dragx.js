@@ -9,8 +9,7 @@ class DragElement {
       this.startY = 0
       // 设置头部拖拽
       this.setHeaderListener()
-      // 设置left right top bottom 等拖拽元素
-      this.createControlDom()
+      // 设置left right top bottom 等拖拽元素 //resize both 代替
     } else {
       new Error('未找到元素，请检查选择器')
     }
@@ -44,79 +43,6 @@ class DragElement {
     this.element.css('left', distanceX)
     this.element.css('top', distanceY)
   }
-
-  // 创建8个大小控制器
-  createControlDom() {
-    const leftControl = $('<div class="drag drag-left-control"></div>')
-    const rightControl = $('<div class="drag drag-right-control"></div>')
-    const topControl = $('<div class="drag drag-top-control"></div>')
-    const bottomControl = $('<div class="drag drag-bottom-control"></div>')
-
-    this.element.append(rightControl)
-    this.element.append(leftControl)
-    this.element.append(topControl)
-    this.element.append(bottomControl)
-    this.setBarControl(leftControl, 'left')
-    this.setBarControl(rightControl, 'right')
-    this.setBarControl(topControl, 'top')
-    this.setBarControl(bottomControl, 'bottom')
-  }
-  // left添加控制器
-  setBarControl(barElement, type) {
-    barElement.mouseenter((e) => $(document).unbind('mousemove'))
-    barElement.mouseleave((e) => $(document).unbind('mousemove'))
-    barElement.mousedown((e) => {
-      console.log(e)
-      this.startX = e.pageX
-      this.startY = e.pageY
-      setTimeout(() => {
-        $(document).mousemove((e) => {
-          if (type === 'left' || type === 'right') {
-            this.setElementWidth(e, type)
-          } else {
-            this.setElementHeight(e, type)
-          }
-        })
-      }, 100)
-    })
-    $(document).mouseup((e) => {
-      console.log(e, '取消')
-      $(document).unbind('mousemove')
-    })
-  }
-  //设置元素的宽度
-  setElementWidth(e, type) {
-    const step = type == 'left' ? this.startX - e.pageX : e.pageX - this.startX
-    const elementWidth = this.element.width()
-    const setWidth = elementWidth + step
-    const offsetLeft = this.element.offset().left
-    if (type === 'left') {
-      const right = window.screen.width - offsetLeft - elementWidth
-      // this.element.attr('style', `width:${setWidth}px;right:${right}px`)
-      this.element.css('width', setWidth)
-      this.element.css('right', right)
-    } else {
-      this.element.css('width', setWidth)
-      this.element.css('left', offsetLeft)
-      // this.element.attr('style', `width:${setWidth}px;left:${offsetLeft}px`)
-    }
-    this.startX = e.pageX
-  }
-  // 设置元素的高度
-  setElementHeight(e, type) {
-    const step = type == 'top' ? this.startY - e.pageY : e.pageY - this.startY
-    const elementHeight = this.element.height()
-    const setHeight = elementHeight + step
-    const offsetTop = this.element.offset().top
-    if (type === 'top') {
-      const bottom = window.screen.height - offsetTop - elementHeight
-      this.element.attr('style', `height:${setHeight}px;bottom:${bottom}px`)
-    } else {
-      this.element.attr('style', `height:${setHeight}px;top:${offsetTop}px`)
-    }
-    this.startY = e.pageY
-  }
-
   // 监听键盘事件 shift a 关闭弹窗
   listenerKeydown() {
     let keys = []
@@ -136,3 +62,7 @@ class DragElement {
 setTimeout(() => {
   new DragElement('.mt-iframe-large').listenerKeydown()
 }, 16)
+
+window.addEventListener('message', (e) => {
+  console.log(e, 'darg')
+})

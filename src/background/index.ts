@@ -36,3 +36,11 @@ onMessage('get-current-tab', async () => {
     }
   }
 })
+
+onMessage('close-popup', () => {
+  console.log('background接受')
+})
+
+chrome.runtime.onMessage.addListener((message, sender) => {
+  console.log('background接受', message, sender)
+})
