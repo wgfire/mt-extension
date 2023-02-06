@@ -15,12 +15,8 @@
 <script setup lang="ts">
 import { sendMessage } from 'webext-bridge'
 function close() {
-  console.log('点击')
   // 发送给background 然后在给到content
-  // chrome.runtime.sendMessage({ context: 'background' })
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    console.log(tabs, 'tabs')
-    tabs[0].id && sendMessage('close-popup', {}, { tabId: tabs[0].id, context: 'background' })
-  })
+  chrome.runtime.sendMessage({ context: 'background' })
+  sendMessage('close-popup', {}, { context: 'background', tabId: 0 })
 }
 </script>
