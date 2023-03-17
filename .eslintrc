@@ -3,6 +3,7 @@
   "rules": {
     "space-before-function-paren": "off",
     "brace-style": "off",
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "no-console": "off"
   }
 }

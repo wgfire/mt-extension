@@ -14,9 +14,11 @@
 
 <script setup lang="ts">
 import { sendMessage } from 'webext-bridge'
-function close() {
+async function close() {
   // 发送给background 然后在给到content
   chrome.runtime.sendMessage({ context: 'background' })
-  sendMessage('close-popup', {}, { context: 'background', tabId: 0 })
+  const tab = await chrome.storage.local.get('currentTab')
+  console.log(tab, 'tab', tab.currentTab.id)
+  sendMessage('close-popup', { data: 'data' }, { context: 'background', tabId: tab.currentTab.id })
 }
 </script>

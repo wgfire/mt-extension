@@ -4,29 +4,30 @@ chrome.runtime.onInstalled.addListener((): void => {
   // eslint-disable-next-line no-console
   console.log('Extension installed')
 })
-
-let previousTabId = 0
+let currentTabId = 0
+const sendCurrentTab = async (tabId: number) => {
+  const currentTab = await chrome.tabs.get(tabId)
+  currentTabId = tabId
+  if (!currentTab) return
+  console.log('current tab', currentTab)
+  chrome.storage.local.set({ currentTab })
+  sendMessage('tab-prev', { title: currentTab.title }, { context: 'content-script', tabId: currentTabId })
+}
 
 // communication example: send previous tab title from background page
 // see shim.d.ts for type decleration
 chrome.tabs.onActivated.addListener(async ({ tabId }) => {
-  if (!previousTabId) {
-    previousTabId = tabId
-    return
-  }
-  const tab = await chrome.tabs.get(previousTabId)
-  previousTabId = tabId
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  if (!tab) return
-
-  // eslint-disable-next-line no-console
-  console.log('previous tab', tab)
-  sendMessage('tab-prev', { title: tab.title }, { context: 'content-script', tabId })
+  sendCurrentTab(tabId)
 })
+
+// chrome.tabs.onCreated.addListener(async (tabId) => {
+//   console.log(tabId, 'onCreated')
+//   sendCurrentTab(tabId.id!)
+// })
 
 onMessage('get-current-tab', async () => {
   try {
-    const tab = await chrome.tabs.get(previousTabId)
+    const tab = await chrome.tabs.get(currentTabId)
     return {
       title: tab?.id,
     }
