@@ -3,6 +3,7 @@
 
 import { XMLHttpRequestSelf } from './proxyXhr/index'
 
+
 window.addEventListener('message', (data) => {
   console.log('script接受消息', data)
 })
@@ -45,7 +46,7 @@ xhr.onBeforeProxy = function (target: XMLHttpRequest) {
  * @returns
  * @description 返回数据前的回调函数，可使用模拟数据返回给客户端渲染
  */
-xhr.onBeforeGetAttr = function (target: XMLHttpRequest, key: string) {
+xhr.onBeforeGetAttr = function (target: XMLHttpRequests, key: string) {
   if (key === 'status') return currentXhr.status
   return target[key]
 }

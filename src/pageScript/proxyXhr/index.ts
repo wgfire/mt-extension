@@ -106,12 +106,12 @@ export class XMLHttpRequestSelf extends XMLHttpRequest {
 
             return target[key]
           },
-          set: (target: XMLHttpRequest, key: keyof XMLHttpRequestOnly, value, receiver) => {
+          set: (target: XMLHttpRequests, key: keyof XMLHttpRequestOnly, value, receiver) => {
             // 绑定用户设置的监听方法 比如 onreadystatechange (先会执行代理上onreadystatechange )
             console.log(target, key, value, 'set')
             try {
               if (typeof value === 'function') {
-                target[key] = (arg: any) => {
+                target[key as string] = (arg: any) => {
                   const isEvent = arg instanceof Event
                   console.log(isEvent, '是否是事件')
                   // 事件里的currentTarget 还是指向的是原生origin,在进行事件的代理
